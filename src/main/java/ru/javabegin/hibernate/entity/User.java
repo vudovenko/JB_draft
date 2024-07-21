@@ -1,10 +1,7 @@
 package ru.javabegin.hibernate.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Objects;
 
@@ -14,7 +11,13 @@ import java.util.Objects;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class User {
+
+    public User(String email, String username) {
+        this.email = email;
+        this.username = username;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

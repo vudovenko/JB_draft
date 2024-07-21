@@ -1,5 +1,6 @@
 package ru.javabegin.hibernate;
 
+import lombok.Value;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -19,19 +20,25 @@ public class Main {
 
         // JPQL -> HQL
         // тут используется универсальный синтаксис, который подойдет как для JPQL, так и HQL
-        Query<Long> query = session
-                .createQuery("select count(*) " +
+
+        // 2 варианта
+        Query<User> query = session
+                .createQuery("select new User(u.email, u.username) " +
                         "from User u " +
-                        "where u.email like :email", Long.class);
-        query.setParameter("email", "%mail%");
-        Long count = query.getSingleResult();
+                        "where u.id = :id", User.class);
+        query.setParameter("id", 10037L);
+        User user = query.getSingleResult();
 
-        // Если использовать импорт из JPQL
-//        Query query = session.createQuery("from User u where u.id = :id", User.class);
-//        query.setParameter("id", 10030L);
-//        User user = (User) query.getSingleResult();
+        log.info("User with 2 values: " + user);
 
-        log.info("Users count: " + count);
+        Query<Object[]> query1 = session
+                .createQuery("select u.email, u.username " +
+                        "from User u " +
+                        "where u.id = :id", Object[].class);
+        query1.setParameter("id", 10037L);
+        Object[] userObject = query1.getSingleResult();
+
+        log.info("User with 2 values: " + userObject[0] + " " + userObject[1]);
 
         session.close();// закрыть сессию
 
