@@ -1,9 +1,12 @@
 package ru.javabegin.hibernate.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.Objects;
+import java.util.List;
 
 @Entity
 @Table(name = "user_data", schema = "todolist", catalog = "postgres")
@@ -11,13 +14,7 @@ import java.util.Objects;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class User {
-
-    public User(String email, String username) {
-        this.email = email;
-        this.username = username;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,5 +26,18 @@ public class User {
 
     @Column(name = "userpassword")
     private String password;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Category> categories;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Priority> priorities;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    public Activity activity; // активность пользователя (активация и любые другие)
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    public Stat stat; // общая статистика пользователя по всем задачам
+
 
 }

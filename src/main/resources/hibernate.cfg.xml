@@ -20,6 +20,11 @@
 
 
         <mapping class="ru.javabegin.hibernate.entity.User"/>
+        <mapping class="ru.javabegin.hibernate.entity.Category"/>
+        <mapping class="ru.javabegin.hibernate.entity.Priority"/>
+        <mapping class="ru.javabegin.hibernate.entity.Stat"/>
+        <mapping class="ru.javabegin.hibernate.entity.Activity"/>
+
 
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
