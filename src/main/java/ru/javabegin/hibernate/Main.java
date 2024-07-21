@@ -19,10 +19,12 @@ public class Main {
 
         // JPQL -> HQL
         // тут используется универсальный синтаксис, который подойдет как для JPQL, так и HQL
-        Query query = session.createQuery("from User", User.class);
+        Query query = session.createQuery("from User u " +
+                "where u.id = :text", User.class);
+        query.setParameter("text", 10025L);
         List<User> users = query.getResultList();
 
-        log.info(users.size());
+        log.info("Found users: " + users.size());
 
         session.close();// закрыть сессию
 
