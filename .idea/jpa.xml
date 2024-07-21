@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpaBuddyIdeaProjectConfig">
+    <option name="reLastEntityCreationPackage" value="src/main/java/ru/javabegin/hibernate/entity" />
+    <option name="reverseEngineeringLastDbConnectionId" value="e5d51523-a1e4-44fd-b69d-b2687196f086__postgres_todolist" />
+  </component>
+  <component name="JpaPluginProjectSettings" reExcludeTablePrefixes="" reExcludeColumnPrefixes="" reExcludeTableSuffixes="" reExcludeColumnSuffixes="">
+    <option name="reUseLazyOnToOneAssociations" value="false" />
+  </component>
+</project>

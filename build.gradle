@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+group 'ru.javabegin.hibernate'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+
+
+dependencies {
+    implementation 'org.hibernate.orm:hibernate-core:6.2.5.Final'
+    implementation 'org.postgresql:postgresql:42.7.2'
+
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+
+}
+
