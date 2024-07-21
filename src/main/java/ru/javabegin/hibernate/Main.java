@@ -1,8 +1,8 @@
 package ru.javabegin.hibernate;
 
-import jakarta.persistence.Query;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import ru.javabegin.hibernate.entity.User;
 
 import java.util.List;
@@ -19,12 +19,16 @@ public class Main {
 
         // JPQL -> HQL
         // тут используется универсальный синтаксис, который подойдет как для JPQL, так и HQL
-        Query query = session.createQuery("from User", User.class);
-        query.setFirstResult(1);
-        query.setMaxResults(10);
-        List<User> users = query.getResultList();
+        Query<User> query = session.createQuery("from User u where u.id = :id", User.class);
+        query.setParameter("id", 10030L);
+        User user = query.getSingleResult();
 
-        log.info("Found users: " + users.size());
+        // Если использовать импорт из JPQL
+//        Query query = session.createQuery("from User u where u.id = :id", User.class);
+//        query.setParameter("id", 10030L);
+//        User user = (User) query.getSingleResult();
+
+        log.info("Found user: " + user);
 
         session.close();// закрыть сессию
 
