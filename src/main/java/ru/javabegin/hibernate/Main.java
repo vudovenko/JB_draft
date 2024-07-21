@@ -19,15 +19,11 @@ public class Main {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
         Query<User> query = session.createQuery("from User", User.class);
-        query.setMaxResults(10);
+        query.setMaxResults(2);
 
         List<User> users = query.getResultList();
 
-        for (User u : users
-        ) {
-            log.info(u.getUsername());
-        }
-
+        log.info(users.get(0).getRoles());
 
         session.close();// закрыть сессию
 

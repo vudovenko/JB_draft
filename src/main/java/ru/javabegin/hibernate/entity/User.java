@@ -7,6 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
+
+/*
+
+пользователь - основной объект, с которым связаны все остальные (через внешние ключи)
+
+ */
 
 @Entity
 @Table(name = "user_data", schema = "todolist", catalog = "postgres")
@@ -38,6 +45,13 @@ public class User {
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     public Stat stat; // общая статистика пользователя по всем задачам
+
+    // если нам не нужна таблица UserRole и ее данные - мы можем просто сразу получить все Role пользователя
+    @ManyToMany(fetch = FetchType.LAZY) // таблица role ссылается на user через промежуточную таблицу user_role
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
 
 }
