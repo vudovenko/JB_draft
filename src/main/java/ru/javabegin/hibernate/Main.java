@@ -3,9 +3,6 @@ package ru.javabegin.hibernate;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
-import ru.javabegin.hibernate.entity.User;
-
-import java.util.List;
 
 @Log4j2
 public class Main {
@@ -16,14 +13,19 @@ public class Main {
 
         Session session = HibernateUtil.getSessionFactory().openSession();
 
-        String query = "select * from todolist.user_data";
-        NativeQuery<User> sqlQuery = session.createNativeQuery(query, User.class);
+        String query = """
+                select
+                    count(*),
+                    substring(ud.email, position('@' in ud.email) + 1, length(ud.email))
+                from todolist.user_data ud
+                where email like '%@%'
+                group by substring(ud.email, position('@' in ud.email) + 1, length(ud.email));
+                """;
+        NativeQuery<Object[]> sqlQuery = session.createNativeQuery(query, Object[].class);
 
-        sqlQuery.setMaxResults(10);
-
-        List<User> list = sqlQuery.list();
-
-        log.info("Users: " + list);
+        sqlQuery.getResultList().forEach(row -> {
+            log.info(row[0] + " - " + row[1] + "\n-------------------------------");
+        });
 
         session.close();
         HibernateUtil.close();
