@@ -19,16 +19,19 @@ public class Main {
 
         // JPQL -> HQL
         // тут используется универсальный синтаксис, который подойдет как для JPQL, так и HQL
-        Query<User> query = session.createQuery("from User u where u.id = :id", User.class);
-        query.setParameter("id", 10030L);
-        User user = query.getSingleResult();
+        Query<Long> query = session
+                .createQuery("select count(*) " +
+                        "from User u " +
+                        "where u.email like :email", Long.class);
+        query.setParameter("email", "%mail%");
+        Long count = query.getSingleResult();
 
         // Если использовать импорт из JPQL
 //        Query query = session.createQuery("from User u where u.id = :id", User.class);
 //        query.setParameter("id", 10030L);
 //        User user = (User) query.getSingleResult();
 
-        log.info("Found user: " + user);
+        log.info("Users count: " + count);
 
         session.close();// закрыть сессию
 
