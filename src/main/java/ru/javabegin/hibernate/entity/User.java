@@ -38,23 +38,24 @@ public class User {
     @Column(name = "userpassword")
     private String password;
 
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Category> categories;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Priority> priorities;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = false)
     public Activity activity; // активность пользователя (активация и любые другие)
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = false)
     public Stat stat; // общая статистика пользователя по всем задачам
 
     // если нам не нужна таблица UserRole и ее данные - мы можем просто сразу получить все Role пользователя
-    @ManyToMany // таблица role ссылается на user через промежуточную таблицу user_role
+    @ManyToMany(fetch = FetchType.LAZY) // таблица role ссылается на user через промежуточную таблицу user_role
     @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+            joinColumns = @JoinColumn(name = "user_id", updatable = false),
+            inverseJoinColumns = @JoinColumn(name = "role_id", updatable = false))
     private Set<Role> roles;
 
 
