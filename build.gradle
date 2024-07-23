@@ -33,5 +33,9 @@ dependencies {
     // Lombok
     compileOnly 'org.projectlombok:lombok:1.18.26'
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+    // кеширование 2го уровня
+    implementation 'org.hibernate:hibernate-jcache:6.1.7.Final' // реализация API
+    implementation 'org.ehcache:ehcache:3.10.6' // API из JSR
 }
 
